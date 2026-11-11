@@ -11,6 +11,14 @@ Pass an array and get the prediction back, or pass a list of files and get predi
 </p>
 
 <p align="center">
+  <a href="https://pypi.org/project/manypred/"><img alt="PyPI" src="https://img.shields.io/pypi/v/manypred"></a>
+  <a href="https://pypi.org/project/manypred/"><img alt="Python versions" src="https://img.shields.io/pypi/pyversions/manypred"></a>
+  <a href="https://github.com/DPIRD-DMA/ManyPred/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/DPIRD-DMA/ManyPred/actions/workflows/ci.yml/badge.svg?branch=main"></a>
+  <a href="https://manypred.readthedocs.io/en/stable/"><img alt="Documentation" src="https://readthedocs.org/projects/manypred/badge/?version=stable"></a>
+  <a href="https://github.com/DPIRD-DMA/ManyPred/blob/main/LICENSE"><img alt="License: MIT" src="https://img.shields.io/pypi/l/manypred"></a>
+</p>
+
+<p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/DPIRD-DMA/ManyPred/main/docs/assets/pipeline-dark.svg">
     <img alt="ManyPred pipeline: a scene is cut into overlapping patches, nodata patches are skipped, batches run through normalisation and the model on the GPU, predictions are blended with weights that fade at patch edges, and the outputs are mosaics, reduced-resolution heads, image-level values or GeoTIFFs" src="https://raw.githubusercontent.com/DPIRD-DMA/ManyPred/main/docs/assets/pipeline-light.svg" width="860">
@@ -21,7 +29,6 @@ Pass an array and get the prediction back, or pass a list of files and get predi
 
 > **Status: pre-alpha.** Until 1.0, a minor version may change the API; the
 > [changelog](https://github.com/DPIRD-DMA/ManyPred/blob/main/CHANGELOG.md) lists every change.
-> [Documentation](https://manypred.readthedocs.io)
 
 ManyPred is the inference engine of [OmniCloudMask](https://github.com/DPIRD-DMA/OmniCloudMask) (OCM)
 pulled out into its own library. It matches OCM's outputs (see "Parity with OmniCloudMask"
