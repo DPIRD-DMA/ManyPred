@@ -118,7 +118,7 @@ def build(theme):
         )
     label("in", LABEL, "scene", "any bands · any size")
 
-    # ---- tiling: the scene with overlapping patches; the nodata corner is skipped
+    # ---- tiling: the scene with overlapping patches; the all-nodata corner patch is skipped
     tx, size = COLS["tile"], 128
     x0, y0 = tx - size / 2, ROW - size / 2
     add(
@@ -126,8 +126,8 @@ def build(theme):
         f'stroke="{t["edge"]}" stroke-width="1.5"/>'
     )
     add(
-        f'<path d="M{x0 + 8} {y0} L{x0 + 52} {y0} L{x0} {y0 + 52} L{x0} {y0 + 8} '
-        f'Q{x0} {y0}, {x0 + 8} {y0} Z" fill="{t["soft"]}"/>'
+        f'<path d="M{x0 + 8} {y0} L{x0 + 56} {y0} L{x0 + 56} {y0 + 56} '
+        f'L{x0} {y0 + 56} L{x0} {y0 + 8} Q{x0} {y0}, {x0 + 8} {y0} Z" fill="{t["soft"]}"/>'
     )
     patch, stride = 56, 36
     for r in range(3):
