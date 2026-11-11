@@ -17,9 +17,7 @@ from an RTX 4090 that another process was also using.
 ## Running them
 
 ```bash
-pip install "manypred[geo] @ git+https://github.com/DPIRD-DMA/ManyPred" \
-    "manyseg @ git+https://github.com/DPIRD-DMA/ManySeg#subdirectory=packages/manyseg" \
-    omnicloudmask matplotlib scipy shapely jupyter
+pip install "manypred[geo]" manyseg omnicloudmask matplotlib scipy shapely jupyter
 jupyter lab
 ```
 

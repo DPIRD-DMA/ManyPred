@@ -1289,8 +1289,8 @@ test = [
 
 [[package]]
 name = "manyseg"
-version = "0.1.0.dev0"
-source = { git = "https://github.com/DPIRD-DMA/ManySeg?subdirectory=packages%2Fmanyseg#e102e1f8fc91c0fcf9e7a321af304e2a79948204" }
+version = "0.1.dev538+g87b58c5bd"
+source = { git = "https://github.com/DPIRD-DMA/ManySeg?subdirectory=packages%2Fmanyseg#87b58c5bd930f00c7546519ef9e5c415f654ec2f" }
 dependencies = [
     { name = "huggingface-hub" },
     { name = "safetensors" },

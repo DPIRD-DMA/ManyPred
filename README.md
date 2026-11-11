@@ -31,10 +31,8 @@ well as any other PyTorch model that returns a tensor or a dict of tensors.
 
 ## Install
 
-ManyPred is not on PyPI yet. Install it from the repository:
-
 ```bash
-pip install "manypred[geo] @ git+https://github.com/DPIRD-DMA/ManyPred"
+pip install "manypred[geo]"
 ```
 
 The core needs only numpy, torch and tqdm; `[geo]` adds rasterio for reading and writing
