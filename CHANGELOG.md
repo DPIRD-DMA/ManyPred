@@ -3,7 +3,7 @@
 All notable changes are listed here. Until 1.0, a minor version (0.x) may change the API; each
 change is listed under "Changed".
 
-## [Unreleased]
+## [0.1.0] - 2026-11-11
 
 First release. ManyPred is the inference engine of
 [OmniCloudMask](https://github.com/DPIRD-DMA/OmniCloudMask) (at commit `50b8f5f`) as its own
