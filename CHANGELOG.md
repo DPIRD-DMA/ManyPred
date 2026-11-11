@@ -3,6 +3,14 @@
 All notable changes are listed here. Until 1.0, a minor version (0.x) may change the API; each
 change is listed under "Changed".
 
+## [Unreleased]
+
+### Fixed
+
+- `device="cuda"` (or no device, on a CUDA machine) after `torch.cuda.set_device(n)` runs on
+  GPU n throughout. The prefetch thread used to read it as GPU 0, so inputs already on GPU n
+  were staged on GPU 0 and copied back.
+
 ## [0.1.0] - 2026-11-11
 
 First release. ManyPred is the inference engine of

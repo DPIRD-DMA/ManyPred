@@ -16,7 +16,7 @@ import manypred
 from manypred import normalize_numpy, normalize_torch, predict_array, predict_batch
 from manypred.batch import BatchSink
 from manypred.collate import collate
-from manypred.devices import patch_for_mps, resolve_dtype, same_device
+from manypred.devices import patch_for_mps, resolve_device, resolve_dtype, same_device
 from manypred.inputs import describe_inputs
 from manypred.normalize import build_normalizer, resolve_scene, validate_spec
 from manypred.outputs import TilePredictions
@@ -378,6 +378,45 @@ def test_same_device_ignores_a_missing_index():
     assert same_device(torch.device("mps"), torch.device("mps:0"))
     assert same_device(torch.device("cpu"), torch.device("cpu"))
     assert not same_device(torch.device("cpu"), torch.device("mps"))
+
+
+def test_resolve_device_pins_cuda_to_the_callers_gpu(monkeypatch):
+    # the current GPU is per thread: worker threads start on GPU 0, so "cuda" has to be
+    # resolved to the caller's GPU before they start
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: True)
+    monkeypatch.setattr(torch.cuda, "current_device", lambda: 1)
+    assert resolve_device("cuda") == torch.device("cuda", 1)
+    assert resolve_device(torch.device("cuda")) == torch.device("cuda", 1)
+    assert resolve_device(None) == torch.device("cuda", 1)
+    assert resolve_device("cuda:0") == torch.device("cuda", 0)
+    assert resolve_device("cpu") == torch.device("cpu")
+
+
+def test_resolve_device_leaves_cuda_alone_without_cuda(monkeypatch):
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: False)
+    assert resolve_device("cuda") == torch.device("cuda")
+
+
+@pytest.mark.cuda
+@pytest.mark.skipif(
+    not torch.cuda.is_available() or torch.cuda.device_count() < 2, reason="needs two GPUs"
+)
+def test_cuda_means_the_current_gpu_on_every_thread():
+    previous = torch.cuda.current_device()
+    torch.cuda.set_device(1)
+    try:
+        model = torch.nn.Conv2d(2, 1, 1).to("cuda:1").eval()
+        chips = [torch.rand(2, 16, 16, device="cuda:1") for _ in range(6)]
+        torch.cuda.synchronize(0)
+        torch.cuda.reset_peak_memory_stats(0)
+        before = torch.cuda.memory_allocated(0)
+        out = predict_batch(model, chips, device="cuda", batch_size=2)
+        torch.cuda.synchronize(0)
+        assert torch.cuda.max_memory_allocated(0) == before  # nothing staged on GPU 0
+        expected = model(torch.stack(chips)).detach().cpu().numpy()
+        np.testing.assert_allclose(np.stack(out), expected, rtol=1e-5, atol=1e-6)
+    finally:
+        torch.cuda.set_device(previous)
 
 
 @pytest.mark.skipif(not torch.backends.mps.is_available(), reason="needs MPS")
