@@ -1,0 +1,101 @@
+[project]
+name = "manypred"
+dynamic = ["version"]
+description = "Tiled and batched inference for PyTorch dense-prediction models: arrays or files in, blended predictions out."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "DPIRD-DMA" }]
+keywords = ["inference", "tiled-inference", "sliding-window", "segmentation", "remote-sensing", "pytorch", "earth-observation"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering :: Image Processing",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: GIS",
+    "Typing :: Typed",
+]
+dependencies = [
+    "numpy>=1.24",
+    "torch>=2.3",
+    "tqdm>=4.0",
+]
+
+[project.optional-dependencies]
+geo = ["rasterio>=1.3"]
+
+[project.urls]
+Homepage = "https://github.com/DPIRD-DMA/ManyPred"
+Repository = "https://github.com/DPIRD-DMA/ManyPred"
+Issues = "https://github.com/DPIRD-DMA/ManyPred/issues"
+Documentation = "https://manypred.readthedocs.io"
+Changelog = "https://github.com/DPIRD-DMA/ManyPred/blob/main/CHANGELOG.md"
+
+[dependency-groups]
+test = ["pytest>=8", "pytest-xdist>=3", "ruff>=0.12"]
+# OmniCloudMask at the commit ManyPred's inference engine was extracted from.
+# Used only to regenerate the golden files and for live parity tests.
+parity = [
+    "omnicloudmask @ git+https://github.com/DPIRD-DMA/OmniCloudMask@50b8f5f2e9d9446cd292df47548fb94c350db782",
+]
+# ManySeg, for the end-to-end tests and the fuzzer; skipped without it
+manyseg = ["manyseg"]
+docs = ["sphinx>=7.0", "sphinx-rtd-theme>=2.0", "myst-parser>=3.0"]
+# what the notebooks use, and what tests/test_notebooks.py needs to run them
+notebooks = ["nbclient>=0.10", "ipykernel>=6", "matplotlib>=3.8", "scipy>=1.10", "shapely>=2"]
+
+[tool.uv.sources]
+manyseg = { git = "https://github.com/DPIRD-DMA/ManySeg", subdirectory = "packages/manyseg" }
+
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+# the version comes from the latest git tag (v0.1.0 -> 0.1.0); between tags it is a dev version
+# such as 0.1.1.dev3+g1a2b3c4. An sdist carries its version in PKG-INFO, so builds from it need no git
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/manypred"]
+
+# the sdist carries what building and testing need (conda-forge runs the tests from it), not
+# the docs, benchmarks or CI config
+[tool.hatch.build.targets.sdist]
+include = [
+    "src",
+    "tests",
+    "examples",
+    "scripts/make_goldens.py",
+    "scripts/fuzz_manyseg.py",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "pyproject.toml",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "slow: slow tests (real models, large scenes, compile)",
+    "cuda: requires a CUDA device",
+    "mps: requires an MPS device",
+    "network: downloads weights or data",
+]
+addopts = "-m 'not slow and not network' --strict-markers"
+
+[tool.ruff]
+line-length = 100
+# the docs' code blocks are hand-aligned sketches; ruff would reformat them
+extend-exclude = ["*.md"]
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "I", "UP"]

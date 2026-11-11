@@ -1,0 +1,6 @@
+# CPU-only torch: the docs import ManyPred for its docstrings, and the CUDA wheels are ~3 GB
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch
+sphinx>=7.0
+sphinx-rtd-theme>=2.0
+myst-parser>=3.0

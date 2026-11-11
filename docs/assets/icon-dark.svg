@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 136 136" width="136" height="136" role="img" aria-label="ManyPred">
+  <rect x="12.75" y="12.75" width="110.5" height="110.5" rx="8" fill="#1E293B" stroke="#475569" stroke-width="1.5"/>
+  <rect x="18" y="18" width="22" height="22" rx="5" fill="#2DD4BF"/>
+  <rect x="44" y="18" width="22" height="22" rx="5" fill="#2DD4BF"/>
+  <rect x="70" y="18" width="22" height="22" rx="5" fill="#334155"/>
+  <rect x="96" y="18" width="22" height="22" rx="5" fill="#334155"/>
+  <rect x="18" y="44" width="22" height="22" rx="5" fill="#2DD4BF"/>
+  <rect x="44" y="44" width="22" height="22" rx="5" fill="#2DD4BF"/>
+  <rect x="70" y="44" width="22" height="22" rx="5" fill="#2DD4BF"/>
+  <rect x="96" y="44" width="22" height="22" rx="5" fill="#334155"/>
+  <rect x="18" y="70" width="22" height="22" rx="5" fill="#334155"/>
+  <rect x="44" y="70" width="22" height="22" rx="5" fill="#2DD4BF"/>
+  <rect x="70" y="70" width="22" height="22" rx="5" fill="#818CF8"/>
+  <rect x="96" y="70" width="22" height="22" rx="5" fill="#818CF8"/>
+  <rect x="18" y="96" width="22" height="22" rx="5" fill="#334155"/>
+  <rect x="44" y="96" width="22" height="22" rx="5" fill="#818CF8"/>
+  <rect x="70" y="96" width="22" height="22" rx="5" fill="#818CF8"/>
+  <rect x="96" y="96" width="22" height="22" rx="5" fill="#818CF8"/>
+  <rect x="14" y="14" width="82" height="82" rx="8" fill="none" stroke="#CBD5E1" stroke-width="3" stroke-dasharray="7 4" stroke-linecap="round"/>
+  <rect x="40" y="40" width="82" height="82" rx="8" fill="none" stroke="#CBD5E1" stroke-width="3" stroke-dasharray="7 4" stroke-linecap="round"/>
+</svg>
