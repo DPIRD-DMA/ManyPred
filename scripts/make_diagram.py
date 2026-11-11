@@ -58,8 +58,8 @@ THEMES = {
     ),
     "dark": dict(
         ink="#F1F5F9",
-        muted="#94A3B8",
-        line="#64748B",
+        muted="#CBD5E1",
+        line="#7C8BA1",
         plate="#1E293B",
         edge="#475569",
         soft="#334155",
