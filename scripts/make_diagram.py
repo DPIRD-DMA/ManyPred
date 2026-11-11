@@ -74,7 +74,7 @@ THEMES = {
     ),
 }
 
-W, H = 1000, 400
+W, H = 1000, 410
 COLS = {"in": 95, "tile": 290, "gpu": 495, "blend": 690, "out": 885}
 ROW = 125  # centre line of the icons
 LABEL = 222  # titles under the icons
@@ -93,8 +93,8 @@ def build(theme):
         )
 
     def label(key, y, title, sub):
-        add(text(title, COLS[key], y, 15, t["ink"], "bold", "middle"))
-        add(text(sub, COLS[key], y + 18, 12.5, t["muted"], anchor="middle"))
+        add(text(title, COLS[key], y, 16.5, t["ink"], "bold", "middle"))
+        add(text(sub, COLS[key], y + 18, 14, t["muted"], anchor="middle"))
 
     for key, name in (
         ("in", "INPUTS"),
@@ -103,7 +103,7 @@ def build(theme):
         ("blend", "BLENDING"),
         ("out", "OUTPUTS"),
     ):
-        add(text(name, COLS[key], 34, 12.5, t["muted"], "bold", "middle", tracking=0.12))
+        add(text(name, COLS[key], 34, 13.5, t["muted"], "bold", "middle", tracking=0.12))
 
     # ---- inputs: a band stack (the scene) and files read by load_func
     cx = COLS["in"]
@@ -158,7 +158,7 @@ def build(theme):
             f'<rect x="{bx}" y="{by}" width="34" height="34" rx="5" fill="{t["b_soft"]}" '
             f'stroke="{t["b"]}" stroke-width="1.2"/>'
         )
-    add(text("batch", gx - 63, ROW + 40, 12, t["muted"], anchor="middle"))
+    add(text("batch", gx - 63, ROW + 40, 14, t["muted"], anchor="middle"))
     arrow(x0 + size + 8, ROW, gx - 92, ROW)
     steps = [
         ("normalise", t["soft"], t["ink"]),
@@ -168,7 +168,7 @@ def build(theme):
     for i, (name, fill, ink) in enumerate(steps):
         sy = ROW - 47 + i * 34
         add(f'<rect x="{gx - 22}" y="{sy}" width="92" height="26" rx="13" fill="{fill}"/>')
-        add(text(name, gx + 24, sy + 17.5, 12.5, ink, "bold", "middle"))
+        add(text(name, gx + 24, sy + 18, 13.5, ink, "bold", "middle"))
     arrow(gx - 40, ROW, gx - 28, ROW)
     label("gpu", LABEL, "batched inference", "copies overlap compute")
 
@@ -211,7 +211,7 @@ def build(theme):
         f'<rect x="{ox + 22}" y="{ROW + 14}" width="50" height="26" rx="13" fill="{t["plate"]}" '
         f'stroke="{t["edge"]}" stroke-width="1.5"/>'
     )
-    add(text("0.82", ox + 47, ROW + 32, 13, t["ink"], "bold", "middle"))
+    add(text("0.82", ox + 47, ROW + 32, 14, t["ink"], "bold", "middle"))
     arrow(bx + 54, ROW, mx - 14, ROW)
     label("out", LABEL, "predictions", "arrays · GeoTIFFs")
 
@@ -238,7 +238,7 @@ def build(theme):
     )
     for key, lines in opts.items():
         for i, s in enumerate(lines):
-            add(text(s, COLS[key], RULE_Y + 26 + i * 18, 12.5, t["muted"], anchor="middle"))
+            add(text(s, COLS[key], RULE_Y + 27 + i * 20, 14, t["muted"], anchor="middle"))
 
     defs = (
         f'<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" '
