@@ -51,10 +51,15 @@ def default_device() -> torch.device:
 
 
 def resolve_device(device: str | torch.device | None) -> torch.device:
-    """A torch.device from a name, a device, or None (:func:`default_device`)."""
-    if device is None:
-        return default_device()
-    return torch.device(device)
+    """A torch.device from a name, a device, or None (:func:`default_device`).
+
+    ``"cuda"`` without an index becomes the caller's current GPU (``"cuda:N"``). The current
+    GPU is set per thread (``torch.cuda.set_device``), so the prefetch and saving threads,
+    which start on GPU 0, have to be told which one the caller meant."""
+    resolved = default_device() if device is None else torch.device(device)
+    if resolved.type == "cuda" and resolved.index is None and torch.cuda.is_available():
+        resolved = torch.device("cuda", torch.cuda.current_device())
+    return resolved
 
 
 def same_device(a: torch.device, b: torch.device) -> bool:
