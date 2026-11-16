@@ -48,7 +48,7 @@ def test_tiny_models_load(name):
 
 def test_goldens_reproduce_with_ocm():
     """Rerun the tiny-model cases with OCM live and compare: classes exactly, values within
-    1e-6 where OCM is deterministic (see scripts/make_goldens.py), else 1e-5."""
+    5e-6 where OCM is deterministic (see scripts/make_goldens.py), else 1e-5."""
     pytest.importorskip("omnicloudmask")
     pytest.importorskip("rasterio")
     sys.path.insert(0, str(Path(__file__).parents[1] / "scripts"))
@@ -68,6 +68,6 @@ def test_goldens_reproduce_with_ocm():
                 np.testing.assert_array_equal(value, old[key], err_msg=f"{name}:{key}")
             else:
                 # deterministic cases are bitwise only on the CPU that generated them; other
-                # CPUs' kernels differ by up to ~7e-7 (seen on CI runners)
-                atol = 1e-6 if exact else 1e-5
+                # CPUs' kernels differ by up to ~2e-6 (seen on ubuntu-26.04 CI runners)
+                atol = 5e-6 if exact else 1e-5
                 np.testing.assert_allclose(value, old[key], atol=atol, err_msg=f"{name}:{key}")
